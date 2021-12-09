@@ -2,7 +2,6 @@ pipeline{
   
   environment{
     AWS_DEFAULT_REGION = "us-east-1"
-    DOCKERHUB_CREDENTIALS = credentials("docker-cred")
   }
   
   agent any
