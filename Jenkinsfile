@@ -43,7 +43,7 @@ pipeline{
       steps {
         //  withAWS(region:'us-east-1', credentials:'aws-cred') {
         withAWS(credentials: 'aws-cred', region: 'us-east-1') {
-          sh "aws eks --region us-east-1 update-kubeconfig --name udacitycapstone"
+          sh "aws eks --region us-east-1 update-kubeconfig --name clouddevops"
           sh 'kubectl apply -f deployment/deploy.yml'
           // sh 'kubectl apply -f deployment/load-balancer.yml'
           sh 'kubectl get nodes'
