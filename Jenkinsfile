@@ -44,15 +44,14 @@ pipeline{
       }
     }
     
-    stage('Deploy image to EKS') {
-      steps {
-          withAWS(region:'us-east-2',credentials:'aws-static') {
-          sh "aws eks --region us-east-2 update-kubeconfig --name udacitycapstone"
-          
-          sh 'kubectl apply -f website.yml'
-          sh 'kubectl apply -f exposewebsite.yml'
-          }
-      }
-    }
+    // stage('Deploy image to EKS') {
+    //   steps {
+    //       withAWS(region:'us-east-1',credentials:'aws-cred') {
+    //       sh "aws eks --region us-east-2 update-kubeconfig --name udacitycapstone"
+    //       sh 'kubectl apply -f website.yml'
+    //       sh 'kubectl apply -f exposewebsite.yml'
+    //       }
+    //   }
+    // }
   }
 }
