@@ -36,21 +36,21 @@ pipeline{
     //   }
     // }
 
-    // stage('push docker Image to docker hub') {
-    //   docker.withDockerRegistry([url: "", credentialsId: "docker-cred"]) { 
-    //     sh 'docker tag clouddevops abdoesam2011/clouddevops'
-    //     sh 'docker push abdoesam2011/clouddevops'
-    //   }
-    // }
+    stage('push docker Image to docker hub') {
+      docker.withDockerRegistry([url: "", credentialsId: "docker-cred"]) { 
+        sh 'docker tag clouddevops abdoesam2011/clouddevops'
+        sh 'docker push abdoesam2011/clouddevops'
+      }
+    }
     
-    // stage('Deploy image to EKS') {
-    //   steps {
-    //       withAWS(region:'us-east-1',credentials:'aws-cred') {
-    //       sh "aws eks --region us-east-2 update-kubeconfig --name udacitycapstone"
-    //       sh 'kubectl apply -f website.yml'
-    //       sh 'kubectl apply -f exposewebsite.yml'
-    //       }
-    //   }
-    // }
+    stage('Deploy image to EKS') {
+      steps {
+          withAWS(region:'us-east-1',credentials:'aws-cred') {
+          sh "aws eks --region us-east-1 update-kubeconfig --name udacitycapstone"
+          sh 'kubectl apply -f deployment/deploy.yml'
+          sh 'kubectl apply -f deployment/load-balancer.yml'
+          }
+      }
+    }
   }
 }
