@@ -1,14 +1,12 @@
 pipeline{
-
+  
   environment{
-    registry = "abdodesam2011/clouddevops"
-    registryCredential = 'dockercred'
+    AWS_DEFAULT_REGION = "us-east-1"
+    DOCKERHUB_CREDENTIALS = credentials("docker-cred")
   }
-
-  agent {
-    docker { image 'node:14-alpine' }
-  }
-
+  
+  agent any
+  
   stages{
 
   stage('check for lingin HTML and docker files') {
@@ -20,17 +18,20 @@ pipeline{
 
     stage('build docker Image') {
       steps {
-          sh 'docker build --tag=abdodesam2011/clouddevops .'
+        sh 'docker build -t clouddevops .'
       }
     }
 
-    stage('Upload docker Image') {
+    stage("docker hub login") {
       steps {
-        script {
-          docker.withRegistry( '', registryCredential ) {
-            sh 'docker push abdodesam2011/clouddevops'
-          }
-        }
+        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+      }
+    }
+
+    stage('push docker Image to docker hub') {
+      steps { 
+        sh 'docker tag clouddevops abdoesam2011/clouddevops'
+        sh 'docker push abdoesam2011/clouddevops'
       }
     }
     
@@ -44,6 +45,12 @@ pipeline{
           }
       }
     }
+    
+    post {
+      always {
+        sh 'docker logout'
+      }  
+    }
+    
   }
-
 }
