@@ -38,9 +38,10 @@ pipeline{
     }
 
     stage('push docker Image to docker hub') {
-
-        // sh 'docker tag clouddevops abdoesam2011/clouddevops'
-        // sh 'docker push abdoesam2011/clouddevops'
+      withDockerRegistry([url: "", credentialsId: "docker-cred"]) { 
+        sh 'docker tag clouddevops abdoesam2011/clouddevops'
+        sh 'docker push abdoesam2011/clouddevops'
+      }
     }
     
     stage('Deploy image to EKS') {
