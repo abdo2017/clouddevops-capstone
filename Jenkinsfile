@@ -34,8 +34,8 @@ pipeline{
     stage('push docker Image to docker hub') {
       steps {
         // docker.withRegistry('https://registry.hub.docker.com', 'docker-cred') {
-          sh 'docker tag clouddevops abdoesam2011/clouddevops'
-          sh 'docker push abdoesam2011/clouddevops'
+          sh 'sudo docker tag clouddevops abdoesam2011/clouddevops'
+          sh 'sudo docker push abdoesam2011/clouddevops'
         // }
       }
     }
