@@ -37,7 +37,7 @@ pipeline{
     // }
 
     stage('push docker Image to docker hub') {
-      docker.withDockerRegistry([url: "", credentialsId: "docker-cred"]) { 
+      .withDockerRegistry([url: "", credentialsId: "docker-cred"]) { 
         sh 'docker tag clouddevops abdoesam2011/clouddevops'
         sh 'docker push abdoesam2011/clouddevops'
       }
@@ -52,5 +52,8 @@ pipeline{
           }
       }
     }
+
+
+
   }
 }
