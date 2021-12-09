@@ -46,8 +46,8 @@ pipeline{
           sh "aws eks --region us-east-1 update-kubeconfig --name udacitycapstone"
           sh 'kubectl apply -f deployment/deploy.yml'
           // sh 'kubectl apply -f deployment/load-balancer.yml'
-          kubectl get nodes
-          kubectl get pods -o wide
+          sh 'kubectl get nodes'
+          sh 'kubectl get pods -o wide'
           
         }
       }
