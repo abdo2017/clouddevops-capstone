@@ -8,8 +8,17 @@ pipeline{
   agent any
   
   stages{
-
-  stage('check for lingin HTML and docker files') {
+    
+    stage("install deps") {
+      steps {
+        // install hadolint
+        sh 'sudo wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64'
+        sh 'chmod +x /bin/hadolint'
+        // install tidy html
+        sh 'sudo apt install tidy'
+      }
+    }
+    stage('check for lingin HTML and docker files') {
       steps {
           sh 'hadolint Dockerfile'
           sh 'tidy -q -e *.html'
