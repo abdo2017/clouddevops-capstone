@@ -45,6 +45,7 @@ pipeline{
         withAWS(credentials: 'aws-cred', region: 'us-east-1') {
           sh "aws eks --region us-east-1 update-kubeconfig --name clouddevops"
           sh 'kubectl apply -f deployment/deploy.yml'
+          sh 'kubectl config use-context -f deployment/load-balancer.yml'
           // sh 'kubectl apply -f deployment/load-balancer.yml'
           sh 'kubectl get nodes'
           sh 'kubectl get pods -o wide'
