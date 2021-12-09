@@ -38,15 +38,9 @@ pipeline{
     }
 
     stage('push docker Image to docker hub') {
-      steps { 
-        withCredentials([usernamePassword(credentialsId: 'docker-cred', passwordVariable: abdo.esam3, usernameVariable: abdoesam2011)]) {
-          sh 'docker tag clouddevops abdoesam2011/clouddevops'
-          sh 'docker push abdoesam2011/clouddevops'
-        }
 
         // sh 'docker tag clouddevops abdoesam2011/clouddevops'
         // sh 'docker push abdoesam2011/clouddevops'
-      }
     }
     
     stage('Deploy image to EKS') {
