@@ -38,7 +38,8 @@ pipeline{
     }
 
     stage('push docker Image to docker hub') {
-      withDockerRegistry([url: "", credentialsId: "docker-cred"]) { 
+      
+      docker.withRegistry('https://registry.hub.docker.com', 'docker-cred') {
         sh 'docker tag clouddevops abdoesam2011/clouddevops'
         sh 'docker push abdoesam2011/clouddevops'
       }
