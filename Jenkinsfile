@@ -27,7 +27,7 @@ pipeline{
 
     stage('build docker Image') {
       steps {
-        sh 'docker build -t clouddevops .'
+        sh 'sudo docker build -t clouddevops .'
       }
     }
 
