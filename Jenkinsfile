@@ -2,6 +2,7 @@ pipeline{
   
   environment{
     AWS_DEFAULT_REGION = "us-east-1"
+    DOCKERHUB_CREDENTIALS=credentials('docker-cred')
   }
   
   agent any
@@ -30,11 +31,11 @@ pipeline{
       }
     }
 
-    // stage("docker hub login") {
-    //   steps {
-    //     sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-    //   }
-    // }
+    stage("docker hub login") {
+      steps {
+        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+      }
+    }
 
     stage('push docker Image to docker hub') {
       withDockerRegistry([url: "", credentialsId: "docker-cred"]) { 
