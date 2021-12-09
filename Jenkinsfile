@@ -31,16 +31,21 @@ pipeline{
       }
     }
 
-    stage("docker hub login") {
-      steps {
-        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-      }
+    // stage("docker hub login") {
+    //   steps {
+    //     sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+    //   }
     }
 
     stage('push docker Image to docker hub') {
       steps { 
-        sh 'docker tag clouddevops abdoesam2011/clouddevops'
-        sh 'docker push abdoesam2011/clouddevops'
+        withCredentials([usernamePassword(credentialsId: 'docker-cred', passwordVariable: 'DOCKER_REGISTRY_PWD', usernameVariable: 'DOCKER_REGISTRY_USER')]) {
+          sh 'docker tag clouddevops abdoesam2011/clouddevops'
+          sh 'docker push abdoesam2011/clouddevops'
+        }
+
+        // sh 'docker tag clouddevops abdoesam2011/clouddevops'
+        // sh 'docker push abdoesam2011/clouddevops'
       }
     }
     
