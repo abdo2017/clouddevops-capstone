@@ -30,21 +30,15 @@ pipeline{
         sh 'sudo docker build -t clouddevops .'
       }
     }
-
-    stage("docker hub login") {
-      steps {
-        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-      }
-    }
-
-    stage('push docker Image to docker hub') {
-      
-      docker.withRegistry('https://registry.hub.docker.com', 'docker-cred') {
-        sh 'docker tag clouddevops abdoesam2011/clouddevops'
-        sh 'docker push abdoesam2011/clouddevops'
-      }
-    }
     
+    stage('push docker Image to docker hub') {
+      steps {
+        docker.withRegistry('https://registry.hub.docker.com', 'docker-cred') {
+          sh 'docker tag clouddevops abdoesam2011/clouddevops'
+          sh 'docker push abdoesam2011/clouddevops'
+        }
+      }
+    }
     stage('Deploy image to EKS') {
       steps {
           withAWS(region:'us-east-1',credentials:'aws-cred') {
