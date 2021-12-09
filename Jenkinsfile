@@ -41,17 +41,11 @@ pipeline{
     }
     stage('Deploy image to EKS') {
       steps {
-         withAWS(region:'us-east-1', credentials:'aws-cred') {
-        // withCredentials([<object of type com.cloudbees.jenkins.plugins.awscredentials.AmazonWebServicesCredentialsBinding>]) {
+        //  withAWS(region:'us-east-1', credentials:'aws-cred') {
           sh "aws eks --region us-east-1 update-kubeconfig --name udacitycapstone"
           sh 'kubectl apply -f deployment/deploy.yml'
           sh 'kubectl apply -f deployment/load-balancer.yml'
-        }
-          // withAWS(region:'us-east-1',credentials:'aws-cred') {
-          // sh "aws eks --region us-east-1 update-kubeconfig --name udacitycapstone"
-          // sh 'kubectl apply -f deployment/deploy.yml'
-          // sh 'kubectl apply -f deployment/load-balancer.yml'
-          // }
+        // }
       }
     }
 
