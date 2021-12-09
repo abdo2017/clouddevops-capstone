@@ -45,13 +45,12 @@ pipeline{
         withAWS(credentials: 'aws-cred', region: 'us-east-1') {
           sh "aws eks --region us-east-1 update-kubeconfig --name udacitycapstone"
           sh 'kubectl apply -f deployment/deploy.yml'
-          sh 'kubectl apply -f deployment/load-balancer.yml'
+          // sh 'kubectl apply -f deployment/load-balancer.yml'
+          kubectl get nodes
+          kubectl get pods -o wide
+          
         }
-      
       }
     }
-
-
-
   }
 }
