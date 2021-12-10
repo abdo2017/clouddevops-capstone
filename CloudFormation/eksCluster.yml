@@ -32,6 +32,7 @@ Resources:
   CapstoneEKS:
     Type: AWS::EKS::Cluster
     Properties:
+      ClusterName: clouddevops
       Version: "1.20"
       RoleArn: !GetAtt ClusterRole.Arn
       ResourcesVpcConfig:
